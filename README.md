@@ -31,9 +31,3 @@ streamlit run app.py
 
 ## Data Source
 Live data from [football-data.org](https://football-data.org) — free tier API.
-
-## Deploy to Streamlit Cloud
-1. Push this folder to a GitHub repo
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your repo and deploy `app.py`
-4. Done — live at `yourapp.streamlit.app`
