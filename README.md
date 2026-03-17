@@ -25,7 +25,7 @@ streamlit run app.py
 ```
 
 ### 3. In the app
-- Enter your **OpenAI API key** (needs GPT-4o-mini access)
+- Enter your **Gemini API key** (needs Gemini Flash access)
 - Select a Premier League team
 - Click **Run Analysis**
 
