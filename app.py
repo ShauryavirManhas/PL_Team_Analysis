@@ -474,7 +474,7 @@ else:
                 5 AI Agents. 1 Team. Full Analysis.
             </div>
             <div style='font-family:DM Mono,monospace;font-size:13px;color:#666;line-height:2;max-width:600px;margin:0 auto'>
-                Select a team → Enter your OpenAI API key → Click Run Analysis<br><br>
+                Select a team → Click Run Analysis<br><br>
                 The system will fetch live Premier League data and run it through<br>
                 5 specialised AI agents to produce a complete tactical report.
             </div>
