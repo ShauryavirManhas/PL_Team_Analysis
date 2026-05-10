@@ -189,7 +189,7 @@ if "results"       not in st.session_state: st.session_state.results       = Non
 if "agent_logs"    not in st.session_state: st.session_state.agent_logs    = []
 if "running"       not in st.session_state: st.session_state.running       = False
 if "selected_team" not in st.session_state: st.session_state.selected_team = "Manchester United"
-if "gemini_key" not in st.session_state: st.session_state.gemini_key = ""
+# if "gemini_key" not in st.session_state: st.session_state.gemini_key = ""
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -233,7 +233,7 @@ st.markdown("<p style='font-family:DM Mono,monospace;font-size:11px;color:#555;l
 
 # ── Run analysis ──────────────────────────────────────────────────────────────
 if run_button:
-    st.session_state.gemini_key=st.secrets["gemini_key"]
+    # st.session_state.gemini_key=st.secrets["gemini_key"]
     st.session_state.running   = True
     st.session_state.agent_logs = []
     st.session_state.results   = None
@@ -261,7 +261,7 @@ if run_button:
                 </div>""", unsafe_allow_html=True)
 
     try:
-        results = run_analysis(st.session_state.gemini_key, selected_team, yield_step)
+        results = run_analysis(st.secrets["gemini_key"], selected_team, yield_step)
         st.session_state.results = results
         st.session_state.running = False
         agent_placeholder.empty()
