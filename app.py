@@ -197,8 +197,10 @@ with st.sidebar:
 
     st.markdown("---")
 
-    st.markdown("<div class='sidebar-label'>Gemini API Key</div>", unsafe_allow_html=True)
-    gemini_key = st.text_input("", placeholder="AIza...", type="password", label_visibility="collapsed")
+    # st.markdown("<div class='sidebar-label'>Gemini API Key</div>", unsafe_allow_html=True)
+    # gemini_key = st.text_input("", placeholder="AIza...", type="password", label_visibility="collapsed")
+
+    gemini_key=st.secrets["gemini_key"]
 
     st.markdown("<div class='sidebar-label' style='margin-top:16px'>Select Team</div>", unsafe_allow_html=True)
     selected_team = st.selectbox("", list(TEAMS.keys()), label_visibility="collapsed",
@@ -235,44 +237,44 @@ st.markdown("<p style='font-family:DM Mono,monospace;font-size:11px;color:#555;l
 
 # ── Run analysis ──────────────────────────────────────────────────────────────
 if run_button:
-    if not gemini_key:
-        st.error("Please enter your Gemini API key in the sidebar.")
-    else:
-        st.session_state.running   = True
-        st.session_state.agent_logs = []
-        st.session_state.results   = None
+    # if not gemini_key:
+    #     st.error("Please enter your Gemini API key in the sidebar.")
+    # else:
+    st.session_state.running   = True
+    st.session_state.agent_logs = []
+    st.session_state.results   = None
 
-        agent_placeholder = st.empty()
+    agent_placeholder = st.empty()
 
-        def yield_step(agent_name, message, status):
-            st.session_state.agent_logs.append({
-                "agent": agent_name,
-                "message": message,
-                "status": status,
-            })
-            # Render current logs
-            with agent_placeholder.container():
-                st.markdown("<h2 style='font-size:28px;margin-bottom:20px'>🤖 Agent Pipeline Running…</h2>", unsafe_allow_html=True)
-                for log in st.session_state.agent_logs:
-                    color = AGENTS.get(log["agent"], {}).get("color", "#888")
-                    status_icon = {"thinking": "⏳", "fetching": "📡", "done": "✅"}.get(log["status"], "•")
-                    card_class  = f"agent-card agent-card-{log['status']}"
-                    st.markdown(f"""
-                    <div class="{card_class}">
-                        <div class="agent-name" style="color:{color}">{log['agent']}</div>
-                        <div class="agent-status">{status_icon} {log['status'].upper()}</div>
-                        <div class="agent-output">{log['message']}</div>
-                    </div>""", unsafe_allow_html=True)
+    def yield_step(agent_name, message, status):
+        st.session_state.agent_logs.append({
+            "agent": agent_name,
+            "message": message,
+            "status": status,
+        })
+        # Render current logs
+        with agent_placeholder.container():
+            st.markdown("<h2 style='font-size:28px;margin-bottom:20px'>🤖 Agent Pipeline Running…</h2>", unsafe_allow_html=True)
+            for log in st.session_state.agent_logs:
+                color = AGENTS.get(log["agent"], {}).get("color", "#888")
+                status_icon = {"thinking": "⏳", "fetching": "📡", "done": "✅"}.get(log["status"], "•")
+                card_class  = f"agent-card agent-card-{log['status']}"
+                st.markdown(f"""
+                <div class="{card_class}">
+                    <div class="agent-name" style="color:{color}">{log['agent']}</div>
+                    <div class="agent-status">{status_icon} {log['status'].upper()}</div>
+                    <div class="agent-output">{log['message']}</div>
+                </div>""", unsafe_allow_html=True)
 
-        try:
-            results = run_analysis(gemini_key, selected_team, yield_step)
-            st.session_state.results = results
-            st.session_state.running = False
-            agent_placeholder.empty()
-            st.rerun()
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
-            st.session_state.running = False
+    try:
+        results = run_analysis(gemini_key, selected_team, yield_step)
+        st.session_state.results = results
+        st.session_state.running = False
+        agent_placeholder.empty()
+        st.rerun()
+    except Exception as e:
+        st.error(f"Error: {str(e)}")
+        st.session_state.running = False
 
 # ── Results display ───────────────────────────────────────────────────────────
 if st.session_state.results:
