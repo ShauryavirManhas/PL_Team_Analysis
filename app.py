@@ -7,7 +7,7 @@ from agents import run_analysis, AGENTS, TEAMS
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="PL MultiAgent — Premier League AI Analysis",
+    page_title="Premier League Team MultiAgent AI Analysis",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="expanded",
