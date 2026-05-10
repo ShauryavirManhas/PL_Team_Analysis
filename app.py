@@ -370,7 +370,7 @@ if st.session_state.results:
             top10 = standings[:10]
             colors = ["#da291c" if t["team"] == selected_team else "#2a2a2a" for t in top10]
             fig2 = go.Figure(go.Bar(
-                x=[t["team"].replace(" FC","").replace(" United","").replace(" City","") for t in top10],
+                x=[t["team"] for t in top10],
                 y=[t["points"] for t in top10],
                 marker_color=colors,
                 text=[t["points"] for t in top10],
